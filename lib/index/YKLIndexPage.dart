@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_start/home/home_page.dart';
 import 'package:flutter_app_start/test.dart';
 import 'navigation_icon_view.dart';
 
@@ -28,7 +29,7 @@ class _YKLIndexPageState extends State<YKLIndexPage> with TickerProviderStateMix
       ),
       new NavigationIconView(
         icon: new Icon(Icons.assessment),
-        title: new Text("test"),
+        title: new Text("gird"),
         vsync: this,
       )
     ];
@@ -39,7 +40,7 @@ class _YKLIndexPageState extends State<YKLIndexPage> with TickerProviderStateMix
 
     _pageList = <StatefulWidget>[
       new RandomWords(),
-      new RandomWords(),
+      new HomePage(),
     ];
 
     _currentPage = _pageList[_currentIndex];
