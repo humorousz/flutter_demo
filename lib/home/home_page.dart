@@ -1,13 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class HomePage extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState()  => new _HomePageState();
+import 'package:flutter_app_start/network/AliENetRequest.dart';
 
+class HomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new _HomePageState();
 }
 
+class _HomePageState extends State<HomePage> {
+  List<String> dataList = <String>[];
 
-class _HomePageState extends State<HomePage>{
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -16,24 +33,50 @@ class _HomePageState extends State<HomePage>{
         appBar: AppBar(
           title: Text("GirdView"),
         ),
-        body: buildGridView(context),
+        body: buildGridView(context, dataList),
       ),
     );
   }
+
+  loadData() async {
+    //AliENetRequest
+    Map<String, String> params = {
+      "key": "5689ede0a2e303e045f8ada57b9239cb",
+      "num": "10"
+    };
+    AliENetRequest.get("http://api.tianapi.com/meinv/", params, (data) {
+      print("success");
+      Map pirateNames = json.decode(data);
+      List list;
+      list = pirateNames['newslist'];
+      for (Map item in list) {
+        dataList.add(item['picUrl']);
+      }
+      setState((){
+        print("setState");
+      });
+    }, (data) {});
+    print("loadData end");
+  }
 }
 
-GridView buildGridView(BuildContext context) {
+
+
+
+GridView buildGridView(BuildContext context, List data) {
+  print("buildGridView");
   return GridView.count(
     crossAxisCount: 2,
-    children: List.generate(20, (index) {
+    children: List.generate(data.length, (index) {
       return Center(
-        child: buildGridViewItem(context),
+        child: buildGridViewItem(context, data[index]),
       );
     }),
   );
 }
 
-Widget buildGridViewItem(BuildContext context) {
+Widget buildGridViewItem(BuildContext context, String url) {
+  print("buildGridViewItem");
   return new GestureDetector(
       onTap: () {
 //        Navigator.of(context).push(new PageRouteBuilder(
@@ -54,7 +97,6 @@ Widget buildGridViewItem(BuildContext context) {
       },
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: new Image.network('http://up.qqjia.com/z/25/tu32710_4.jpg'),
+        child: new Image.network(url),
       ));
 }
-
