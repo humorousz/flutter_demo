@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
   List<String> dataList = <String>[];
 
   @override
@@ -58,6 +58,10 @@ class _HomePageState extends State<HomePage> {
     }, (data) {});
     print("loadData end");
   }
+
+  // TODO: implement wantKeepAlive
+  @override
+  bool get wantKeepAlive => true;
 }
 
 
@@ -95,8 +99,12 @@ Widget buildGridViewItem(BuildContext context, String url) {
 //              );
 //            }));
       },
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: new Image.network(url),
+      child: AspectRatio(
+        aspectRatio: 1.0/1.0,
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: new Image.network(url,
+          fit: BoxFit.cover,),
+        ),
       ));
 }
