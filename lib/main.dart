@@ -1,13 +1,17 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'index/YKLIndexPage.dart';
 
+void main()=> runApp(new MyApp());
 
-void main() async {
-
-  runZoned<Future<Null>> (() async{
-    runApp(new YKLIndexPage());
-  }, onError: (error, stackTrace) async{
-    print("flutter zone catch an error");
-  });
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+        title: "Welcome to Flutter",
+        home: Scaffold(
+          body: Center(
+            child: Text("Hello world2"),
+          ),
+        )
+    );
+  }
 }
